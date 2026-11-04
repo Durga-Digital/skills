@@ -9,7 +9,7 @@ specific workflow using the app's tools and APIs.
 | --- | --- | --- |
 | [Jessse](skills/jessse/README.md) | [Brand workflows](skills/jessse/jessse-brand/SKILL.md), [research](skills/jessse/jessse-research/SKILL.md) | Available |
 | [Conclude](skills/conclude/README.md) | — | Scaffolded |
-| [Jettworth](skills/jettworth/README.md) | — | Scaffolded |
+| [JettWorth](skills/jettworth/README.md) | [Financial review](skills/jettworth/jettworth-financial-review/SKILL.md), [plan comparison](skills/jettworth/jettworth-plan-comparison/SKILL.md), [stress testing](skills/jettworth/jettworth-stress-test/SKILL.md), [scenario planning](skills/jettworth/jettworth-scenario-planning/SKILL.md) | Available |
 | [Narada](skills/narada/README.md) | — | Scaffolded |
 
 ## Install
@@ -73,7 +73,12 @@ skills/
 │   ├── jessse-brand/SKILL.md
 │   └── jessse-research/SKILL.md
 ├── conclude/README.md
-├── jettworth/README.md
+├── jettworth/
+│   ├── README.md
+│   ├── jettworth-financial-review/SKILL.md
+│   ├── jettworth-plan-comparison/SKILL.md
+│   ├── jettworth-stress-test/SKILL.md
+│   └── jettworth-scenario-planning/SKILL.md
 └── narada/README.md
 ```
 
