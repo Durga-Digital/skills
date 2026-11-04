@@ -7,7 +7,7 @@ specific workflow using the app's tools and APIs.
 
 | App | Skills | Status |
 | --- | --- | --- |
-| [Jessse](skills/jessse/README.md) | [Brand workflows](skills/jessse/jessse-brand/SKILL.md), [research](skills/jessse/jessse-research/SKILL.md) | Available |
+| [Jessse](skills/jessse/README.md) | [Brand workflows and external recurrence](skills/jessse/jessse-brand/SKILL.md), [research](skills/jessse/jessse-research/SKILL.md) | Available |
 | [Conclude](skills/conclude/README.md) | — | Scaffolded |
 | [JettWorth](skills/jettworth/README.md) | [Financial review](skills/jettworth/jettworth-financial-review/SKILL.md), [plan comparison](skills/jettworth/jettworth-plan-comparison/SKILL.md), [stress testing](skills/jettworth/jettworth-stress-test/SKILL.md), [scenario planning](skills/jettworth/jettworth-scenario-planning/SKILL.md) | Available |
 | [Narada](skills/narada/README.md) | [Newsletters](skills/narada/narada-newsletter/SKILL.md), [campaigns](skills/narada/narada-campaign/SKILL.md), [audience imports](skills/narada/narada-audience-import/SKILL.md), [forms](skills/narada/narada-forms/SKILL.md), [delivery troubleshooting](skills/narada/narada-delivery-troubleshooting/SKILL.md), [app integration](skills/narada/narada-app-integration/SKILL.md) | Available |

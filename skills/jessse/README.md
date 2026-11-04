@@ -5,7 +5,7 @@ an approved MCP connection.
 
 | Skill | Purpose |
 | --- | --- |
-| [jessse-brand](jessse-brand/SKILL.md) | Use Brand context to manage ideas, drafts, media, campaigns, series and approved scheduling workflows. |
+| [jessse-brand](jessse-brand/SKILL.md) | Use Brand context to manage ideas, drafts, media, campaigns, series, external recurring Brand work and approved publishing schedules. |
 | [jessse-research](jessse-research/SKILL.md) | Research with your harness's tools using current Brand context, then save findings and sources to Jessse. Includes guidance for external recurring jobs. |
 
 ```bash
@@ -16,3 +16,5 @@ The skills require an existing Jessse MCP connection and explicitly granted
 permissions. Brand context and research remain private to that connection; this
 repository contains only reusable instructions. Research requires search tools
 in your harness. The skill does not start a recurring job by itself.
+
+Brand Operator and series execution belong to your agent. Save preferences in Jessse, then configure and confirm recurrence in the harness. This guidance requires the app release exposing `get_brand_operator`; internal series activation is not a fallback.

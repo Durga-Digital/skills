@@ -1,8 +1,8 @@
 ---
 name: jessse-brand
-description: Use Jessse Brand context and public evidence to research, plan, create or edit ideas, source drafts and platform variants, assign media, organize campaigns and content series, explicitly activate recurring drafts, and schedule Jessse-approved content through an already connected Jessse MCP server. Use when work should draw on or be saved to a Jessse Brand.
+description: Use Jessse Brand context and public evidence to research, plan, create or edit ideas, source drafts and platform variants, assign media, organize campaigns and content series, set up recurring work in the user’s external agent, and schedule Jessse-approved content through an already connected Jessse MCP server. Use when work should draw on or be saved to a Jessse Brand.
 metadata:
-  version: "1.5"
+  version: "1.6"
 ---
 
 # Work with a Jessse Brand
@@ -56,13 +56,26 @@ For research, follow [the Jessse research skill](https://github.com/Durga-Digita
 - Check `campaigns:read` / `campaigns:write` or `series:read` / `series:write` before using these tools. Creating or editing a plan does not run generation. All plan items and series must reuse an existing pillar in the approved Brand.
 - Use `list_campaigns` / `get_campaign` before continuing a campaign. Follow `nextCursor` for all plan items. `create_campaign` saves the supplied brief and explicit start/deadline. `update_campaign` uses the campaign revision, replaces a supplied brief, and can archive the campaign. Archiving does not cancel post schedules.
 - `add_campaign_item` uses the current campaign revision. `update_campaign_item` and `remove_campaign_item` use the item's revision. Items are planned by date, with `sortOrder` resolving order on the same date. Optional `ideaId` / `postId` links must share its Brand and pillar and need their own read permissions. Omitted links stay; null unlinks. Removing a plan item preserves the linked content. Intended plan dates never schedule publication.
-- `create_content_series` saves a **paused**, review-only weekly series. `update_content_series` also pauses it, including when only the brief changes. Day/time use the account timezone returned by `get_content_series`; Sunday is 0. Resolve any mismatch with the user's intended timezone before activation; the tools do not change account timezone.
-- Activate only when the user explicitly asks for recurring generation and understands that each run uses available Jessse credits. `activate_content_series` additionally requires `series:activate`, the current series revision and timezone, and `confirmCreditUse: true`. This starts one weekly draft for review, potentially in the current due window. It does not approve, auto-schedule, publish or buy credits. Do not activate just because the user requested a series or supplied a cadence.
-- `pause_content_series` stops future runs; work already underway may finish. Disconnecting the assistant leaves an activated series running. Pause explicitly if the user's intent is to stop it. Retry receipts report the original action, not current state: reread before reporting whether a series is running.
+- `create_content_series` and `update_content_series` save the reusable brief, existing pillar and preferred weekly cadence. They do not start work, spend AI credits or control any scheduler. Read the current revision and account timezone with `get_content_series` before editing; Sunday is 0. Configure the actual task in the user's harness.
+
+## Recurring Brand Operator and series work
+
+Jessse stores context and results. Your harness owns research, writing, external integrations and recurrence. Discover the live tools first. If `get_brand_operator` is unavailable, explain that the server needs the external-recurring-work release. Never fall back to retired `activate_content_series` or `pause_content_series` tools.
+
+1. Start from the Brand-specific setup prompt on Jessse's Recurring work or Content series page, or confirm the intended Brand and cadence. `get_brand_operator` returns saved weekly preferences and the draft target with Brand-read consent. `get_content_series` returns the brief and pillar with series-read consent. Neither reports an active job.
+2. Verify that this harness supports unattended recurring tasks and persistent tool authentication. Otherwise explain the limitation and offer a reusable manual task. Skills, MCP connections and copied prompts do not activate recurrence.
+3. Use a stable task key containing the Brand and operator/series IDs. Check for an existing task and update it instead of duplicating it. Confirm timezone, next occurrence, task identity and pause/edit instructions after configuring it. Do not invent scheduler commands or run an extra initial occurrence unless requested.
+4. Every occurrence refreshes Brand context and the saved operator/series brief. Stop on missing or inaccessible records. Check existing ideas, posts, campaigns and research to avoid duplicate work. Report changed cadence and ask the user to update the harness task: editing Jessse preferences does not reschedule it.
+5. For Brand Operator work, plan from current priorities and produce no more than the saved draft target. Research and write with your tools. Save supplied campaign plan items when campaign consent is granted; intended dates do not schedule publication. Avoid duplicating series editions.
+6. For series work, keep its premise, format and existing pillar. Use `list_ideas` with tag `series:<seriesId>` to find earlier briefs, following pagination and `promotedToPostId` via `get_post`. Older internal editions may not have these tags: also inspect recent Brand posts.
+7. Preserve edition identity without internal tasks: `create_idea` saves a short brief (maximum 1,000 characters) tagged `series:<seriesId>` (or `brand-operator`) plus the intended local occurrence date. `promote_idea` links it to a post; `update_draft` saves the full authored copy with its current revision. This needs idea-create/read/update, draft-write and post-read access. Validate final draft text. Use `create_variant` and `request_variant_approval` when requested and permitted; never approve for the owner.
+8. Retain stable request UUIDs per occurrence and operation. Retry identical writes with the same UUID after a timeout; check occurrence tags and linked posts after restarts. Reconcile revision conflicts. Save cited research through the research library and return links and blockers. Leave output for review: recurring production does not authorize scheduling or publishing.
+
+Pause/delete the task in the harness to stop recurrence. Deleting its brief in Jessse makes future reads fail but does not cancel the external task. Revoke access separately if needed. Already-approved Jessse publishing schedules are independent and need their own cancellation.
 
 ## Report the result
 
-Return the saved idea or draft link and a brief description of what was saved. Explain any relevant validation limits. Never claim content was scheduled, published, approved, fact-checked, or produced by an internal Jessse agent unless a tool explicitly establishes that result. For a schedule, report the exact account, local time/timezone and returned status. Scheduled is not published; awaiting_action needs completion on the provider. There is no immediate-publish, approval, pillar-creation or credit-purchase tool. Recurring generation is a separate activation, never implied by saving a series.
+Return the saved idea or draft link and a brief description of what was saved. Explain any relevant validation limits. Never claim content was scheduled, published, approved, fact-checked, or produced by an internal Jessse agent unless a tool explicitly establishes that result. For a schedule, report the exact account, local time/timezone and returned status. Scheduled is not published; awaiting_action needs completion on the provider. There is no immediate-publish, approval, pillar-creation or credit-purchase tool. Recurring generation runs in the external harness; only its confirmed scheduler state establishes that a task is active.
 
 
 ## Research library
